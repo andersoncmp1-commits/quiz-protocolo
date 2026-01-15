@@ -64,6 +64,7 @@ export const LandingStep = ({ step, onNext }) => {
                     ))}
                 </div>
 
+                {step.testimonials && step.testimonials.length > 0 && (
                 <div className="w-full bg-blue-50/50 p-4 rounded-xl mb-4">
                     <p className="text-sm text-slate-500 mb-4 font-medium">Veja a <span className="text-blue-500 font-bold">opinião de quem já recebeu</span> seu protocolo de emergência emocional:</p>
 
@@ -78,6 +79,7 @@ export const LandingStep = ({ step, onNext }) => {
                         ))}
                     </div>
                 </div>
+                )}
 
             </motion.div>
         </div>

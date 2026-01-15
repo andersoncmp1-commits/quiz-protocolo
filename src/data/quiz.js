@@ -5,36 +5,14 @@ export const steps = [
     topBar: true,
     title: 'PARA QUEM BUSCA CURAR SEUS TRAUMAS DE INFÂNCIA',
     subtitle: 'Responda este <span class="highlight-orange">quiz de 2 minutos</span> para acessar um <span class="highlight-blue">diagnóstico completo</span> das suas feridas emocionais.',
-    offer: '<span class="highlight-orange-bold">E MAIS!</span> Você vai receber um <span class="highlight-blue-bold">protocolo de emergência emocional</span> para se libertar da dependência emocional, relacionamentos tóxicos e autossabotagem.',
+
     question: 'Selecione o seu gênero para <span class="highlight-blue">começar</span>:',
     heroImage: null,
     options: [
       { label: 'Homem ♂️', value: 'male' },
       { label: 'Mulher ♀️', value: 'female' }
     ],
-    testimonials: [
-      {
-        title: '“Cresci acreditando que não merecia amor”',
-        name: 'Vanessa Ribeiro',
-        age: 45,
-        text: 'Na minha infância, só ouvia críticas. Meu pai dizia que eu era um erro, e minha mãe raramente demonstrava carinho. Cresci com a sensação de que eu não merecia amor, e isso me acompanhou em todos os meus relacionamentos. Eu aceitava migalhas...',
-        rating: 5
-      },
-      {
-        title: '“Eu sempre imaginava que algo ruim ia acontecer”',
-        name: 'André Luiz Pereira',
-        age: 56,
-        text: 'Eu cresci em uma casa onde ninguém falava sobre sentimentos. Mas os gritos e as portas batendo diziam tudo. Cada vez que meu pai perdia o controle, eu me escondia...',
-        rating: 5
-      },
-      {
-        title: '“Eu achava que a vida era só sofrimento”',
-        name: 'Camila Mendes',
-        age: 32,
-        text: 'Meu pai era alcoólatra e eu cresci vendo minha mãe apanhar quando ele bebia. Muitas vezes, eu também era o alvo. Passei a adolescência acreditando que a vida era apenas sofrimento...',
-        rating: 5
-      }
-    ]
+
   },
 
   {
@@ -283,7 +261,7 @@ export const steps = [
     type: 'info',
     layout: 'benefit-carousel',
     title: 'Estamos na <span class="text-blue-600">reta final...</span>',
-    image: '/assets/journey_pathway.png',
+
     subtitle: 'O seu <span class="text-orange-500 font-bold">protocolo vai ajudar você</span> com:',
     copy: 'O seu <span class="text-orange-500 font-bold">protocolo vai ajudar você</span> com:',
     slides: [
