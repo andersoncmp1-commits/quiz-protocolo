@@ -276,12 +276,42 @@ export const InfoStep = ({ step, onNext }) => {
 
     if (step.layout === 'news-impact') {
         const [currentNewsSlide, setCurrentNewsSlide] = useState(0);
+        const [touchStart, setTouchStart] = useState(null);
+        const [touchEnd, setTouchEnd] = useState(null);
+        
+        // Minimum swipe distance (in px)
+        const minSwipeDistance = 50;
+        
+        const onTouchStart = (e) => {
+            setTouchEnd(null);
+            setTouchStart(e.targetTouches[0].clientX);
+        };
+        
+        const onTouchMove = (e) => {
+            setTouchEnd(e.targetTouches[0].clientX);
+        };
+        
+        const onTouchEnd = () => {
+            if (!touchStart || !touchEnd) return;
+            const distance = touchStart - touchEnd;
+            const isLeftSwipe = distance > minSwipeDistance;
+            const isRightSwipe = distance < -minSwipeDistance;
+            
+            if (isLeftSwipe) {
+                // Swipe left - go to next slide
+                setCurrentNewsSlide((prev) => (prev + 1) % step.newsSlides.length);
+            }
+            if (isRightSwipe) {
+                // Swipe right - go to previous slide
+                setCurrentNewsSlide((prev) => (prev - 1 + step.newsSlides.length) % step.newsSlides.length);
+            }
+        };
         
         useEffect(() => {
             if(!step.newsSlides || step.newsSlides.length <= 1) return;
             const timer = setInterval(() => {
                 setCurrentNewsSlide((prev) => (prev + 1) % step.newsSlides.length);
-            }, 3000);
+            }, 5000);
             return () => clearInterval(timer);
         }, [step.newsSlides]);
 
@@ -298,23 +328,46 @@ export const InfoStep = ({ step, onNext }) => {
                 {/* News Carousel */}
                  {step.newsSlides && (
                     <div className="relative w-full mb-6">
-                        <div className="news-carousel-card relative z-10">
+                        <div 
+                            className="news-carousel-card relative z-10"
+                            onTouchStart={onTouchStart}
+                            onTouchMove={onTouchMove}
+                            onTouchEnd={onTouchEnd}
+                            style={{ touchAction: 'pan-y' }}
+                        >
                              <motion.div
                                 key={currentNewsSlide}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5 }}
                              >
-                                <img src={step.newsSlides[currentNewsSlide]} alt="News" className="w-full h-auto block" />
+                                <img 
+                                    src={step.newsSlides[currentNewsSlide]} 
+                                    alt="News" 
+                                    className="w-full h-auto block" 
+                                    draggable="false"
+                                    style={{ userSelect: 'none', pointerEvents: 'none' }}
+                                />
                              </motion.div>
                         </div>
                         
                         {/* Dots for News Carousel */}
-                        <div className="flex justify-center gap-2 mb-2">
-                             {(step.newsSlides.length > 1 ? step.newsSlides : [1, 2, 3]).map((_, i) => (
-                                <div 
+                        <div className="flex justify-center items-center gap-3 mt-4 mb-2">
+                             {step.newsSlides.map((_, i) => (
+                                <button
                                     key={i} 
-                                    className={`rounded-full transition-all duration-300 ${i === currentNewsSlide ? 'w-2 h-2 bg-orange-500' : 'w-1.5 h-1.5 bg-orange-200'}`}
+                                    onClick={() => setCurrentNewsSlide(i)}
+                                    style={{
+                                        width: i === currentNewsSlide ? '12px' : '8px',
+                                        height: i === currentNewsSlide ? '12px' : '8px',
+                                        borderRadius: '50%',
+                                        backgroundColor: i === currentNewsSlide ? '#f97316' : '#fed7aa',
+                                        border: 'none',
+                                        padding: 0,
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease'
+                                    }}
+                                    aria-label={`Ir para slide ${i + 1}`}
                                 />
                             ))}
                         </div>
@@ -773,13 +826,13 @@ export const AnalysisStep = ({ step, onNext }) => {
     const testimonials = [
         {
             title: "Eu fui uma criança adultizada",
-            name: "Felipe Santos",
+            name: "Mariana Costa",
             age: 29,
             text: "Minha mãe sofria de depressão e meu pai era sempre ausente. Aos 10 anos, eu já cozinhava, limpava a casa e cuidava dos meus irmãos. Nunca tive a chance de ser criança. Isso me tornou uma pessoa muito rígida, incapaz de relaxar ou confiar nos outros. Quando iniciei o protocolo, percebi que carregava responsabilidades que nunca deveriam ter sido minhas. Devolver esse peso me deu liberdade para, finalmente, viver a minha própria vida."
         },
         {
             title: "Carreguei a culpa pelos erros dos meus pais",
-            name: "Juliano Castro",
+            name: "Fernanda Oliveira",
             age: 51,
             text: "Quando eu tinha 8 anos, minha mãe foi embora de casa. Meu pai me fez acreditar que foi culpa minha. Essa culpa me acompanhou por décadas, me fazendo sentir sempre insuficiente e incapaz. Com o diagnóstico, finalmente enxerguei que aquela criança não tinha culpa de nada. Consegui acolher minha versão pequena e machucada, e foi como libertar uma parte de mim que estava presa há anos. Hoje vivo muito mais leve."
         },
@@ -1338,7 +1391,7 @@ export const SalesStep = ({ step }) => {
                     textDecoration: 'line-through',
                     marginBottom: '8px'
                 }}>
-                    De R$ 197,00
+                    De R$ 199,00
                 </p>
                 
                 <p style={{ marginBottom: '4px', color: '#64748b', fontSize: '14px' }}>Por apenas</p>
@@ -1493,7 +1546,7 @@ export const SalesStep = ({ step }) => {
                     <p style={{ fontSize: '14px', color: '#475569', fontStyle: 'italic', marginBottom: '8px', lineHeight: '1.5' }}>
                         "A técnica do parquinho mudou meu dia. Senti que finalmente minha criança não estava mais sozinha."
                     </p>
-                    <p style={{ fontSize: '12px', color: '#94a3b8' }}>– Aluna SOS</p>
+                    <p style={{ fontSize: '12px', color: '#94a3b8' }}>– Camila Ferreira</p>
                 </div>
 
                 {/* Guarantee */}

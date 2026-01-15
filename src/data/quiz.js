@@ -92,7 +92,7 @@ export const steps = [
       'Pai / Mãe', 'Irmão / Irmã', 'Avô(ó)',
       'Tio(a)', 'Primo(a)', 'Amigo(a)',
       'Professor(a)', 'Colega de sala',
-      'Ex-namorado(a)', 'Padrasto(Madrasta)',
+      'Padrasto(Madrasta)',
       'Outras pessoas'
     ]
   },
@@ -195,7 +195,7 @@ export const steps = [
     type: 'question',
     layout: 'list-icons',
     section: 'Parte 2 - Consequências do trauma',
-    question: '<span class="block text-lg font-normal text-slate-600 mb-2">Você concorda com a afirmação:</span> <span class="text-orange-500">"</span> <span class="italic">Em meus relacionamentos, muitas vezes <span class="text-blue-600">sinto que me importo mais</span> do que a outra pessoa.</span> <span class="text-orange-500">"</span>',
+    question: '<span class="block text-lg font-normal text-slate-600 mb-2">Você concorda com a afirmação:</span> <span class="text-orange-500">"</span><span class="italic">Nos meus relacionamentos, muitas vezes <span class="text-blue-600">sinto que me importo mais</span> do que a outra pessoa.</span><span class="text-orange-500">"</span>',
     options: [
       'Sim, isso me incomoda bastante',
       'Meus relacionamentos são equilibrados',
@@ -330,7 +330,7 @@ export const steps = [
     subtitle: 'Selecione uma ou mais opções abaixo e depois clique no botão <span class="text-orange-500 font-bold">"CONTINUAR"</span> no final desta página.',
     multiSelect: true,
     options: [
-      'Ansiedade', 'Apatia', 'Estresse',
+      'Ansiedade', 'Apatia/Congelamento', 'Estresse',
       'Medo', 'Culpa', 'Vergonha',
       'Insegurança', 'Desmotivação',
       'Procrastinação', 'Autossabotagem',
