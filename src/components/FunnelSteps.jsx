@@ -40,7 +40,15 @@ export const LandingStep = ({ step, onNext }) => {
                     dangerouslySetInnerHTML={{ __html: step.offer }}
                 />
 
-
+                {step.heroImage && (
+                    <div className="w-full max-w-sm mb-6 mx-auto rounded-xl overflow-hidden border-2 border-slate-900 bg-white">
+                        <img 
+                            src={step.heroImage} 
+                            alt="Trauma Faces" 
+                            className="w-full h-auto object-cover"
+                        />
+                    </div>
+                )}
 
                 <p className="font-bold text-lg mb-4 text-slate-800"
                     dangerouslySetInnerHTML={{ __html: step.question }}
@@ -66,7 +74,7 @@ export const LandingStep = ({ step, onNext }) => {
 
                 {step.testimonials && step.testimonials.length > 0 && (
                 <div className="w-full bg-blue-50/50 p-4 rounded-xl mb-4">
-                    <p className="text-sm text-slate-500 mb-4 font-medium">Veja a <span className="text-blue-500 font-bold">opinião de quem já recebeu</span> seu protocolo de emergência emocional:</p>
+                    <p className="text-sm text-slate-500 mb-4 font-medium">Veja a <span className="text-blue-500 font-bold">opinião de quem já recebeu</span> seu protocolo personalizado:</p>
 
                     <div className="flex flex-col gap-4">
                         {step.testimonials.map((t, i) => (
@@ -74,7 +82,7 @@ export const LandingStep = ({ step, onNext }) => {
                                 <div className="stars">★★★★★</div>
                                 <p className="testimonial-title">{t.title}</p>
                                 <p className="testimonial-meta">{t.name}, {t.age} anos</p>
-                                <p className="testimonial-text">"{t.text}"</p>
+                                <p className="testimonial-text">{t.text}</p>
                             </div>
                         ))}
                     </div>
@@ -97,7 +105,7 @@ export const TransitionStep = ({ step, onNext }) => {
             >
                 <div className="w-full relative">
                     <img
-                        src={crowdImage}
+                        src="/assets/transition_healing.png"
                         alt="Pessoas curadas"
                         className="w-full h-auto object-cover"
                         style={{ maxHeight: '250px', width: '100%' }}
@@ -126,20 +134,23 @@ export const TransitionStep = ({ step, onNext }) => {
     return (
         <motion.div
             variants={variants} initial="hidden" animate="visible" exit="exit"
-            className="glass-card text-center flex flex-col items-center justify-center gap-6 py-8"
+            className="glass-card text-center flex flex-col items-center justify-start gap-5 py-6"
         >
             {/* Custom Title like "Perfeito!" */}
             {step.title && (
-                <h2 className="text-3xl font-black text-blue-600 mb-2">{step.title}</h2>
+                <h2 
+                    className="text-3xl font-black text-blue-600 mb-1 leading-tight"
+                    dangerouslySetInnerHTML={{ __html: step.title }}
+                />
             )}
 
             {/* Custom Image */}
             {step.image ? (
-                <div className="w-full max-w-sm mx-auto mb-4 rounded-xl overflow-hidden">
+                <div className="w-full max-w-sm mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm border border-slate-100">
                     <img
                         src={step.image}
                         alt="Transition visual"
-                        className="w-full h-auto object-contain"
+                        className="w-full h-auto object-cover"
                     />
                 </div>
             ) : (
@@ -148,15 +159,15 @@ export const TransitionStep = ({ step, onNext }) => {
                 </div>
             )}
 
-            <h2
-                className="h2 font-normal text-slate-700 leading-relaxed"
+            <div
+                className="text-[17px] text-slate-800 leading-relaxed font-medium px-1"
                 dangerouslySetInnerHTML={{ __html: step.copy }}
             />
 
             {step.buttonText && (
                 <button
                     onClick={() => onNext({})}
-                    className="btn-orange"
+                    className="btn-orange w-full mt-2"
                 >
                     {step.buttonText}
                 </button>
@@ -1199,7 +1210,400 @@ export const LeadCaptureStep = ({ step, onNext }) => {
     );
 };
 
-export const SalesStep = ({ step }) => {
+export const SalesStep = ({ step, onNext }) => {
+    const handleBuy = () => {
+        window.location.href = 'https://www.ggcheckout.com/checkout/v5/TITdm6Z7y3T8Et64IGoc';
+    };
+
+    return (
+        <motion.div
+            variants={variants} initial="hidden" animate="visible" exit="exit"
+            className="w-full max-w-lg mx-auto pb-12 font-sans"
+        >
+            {/* Progress Bar */}
+            <div className="w-full h-1.5 bg-orange-400 mb-6 rounded-full"></div>
+
+            {/* 1. Header & Graph */}
+            <div className="text-center mb-8 px-4">
+                <h1 className="text-2xl md:text-3xl font-black text-blue-600 mb-3 leading-tight">
+                    O seu protocolo de 14 dias está <span style={{ color: '#f97316' }}>pronto!</span>
+                </h1>
+                <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+                    O seu plano foi <strong>personalizado para atuar na raiz dos seus traumas</strong> e criar mudanças duradouras e significativas.
+                </p>
+                
+                {/* Graph Image */}
+                <div className="w-full rounded-xl overflow-hidden mb-6">
+                    <img 
+                        src="https://i.imgur.com/mCK7L5S.png" 
+                        alt="Gráfico de evolução emocional" 
+                        className="w-full h-auto"
+                    />
+                </div>
+            </div>
+
+            {/* 2. Comparison Columns */}
+            <div className="grid grid-cols-2 gap-4 mb-8 px-4">
+                {/* Left Column (SEM) */}
+                <div 
+                    className="bg-white rounded-2xl p-5 flex flex-col gap-4 shadow-sm"
+                    style={{ border: '1px solid #e5e7eb' }}
+                >
+                    <div className="text-center mb-1">
+                        <h3 className="text-2xl font-black leading-tight">
+                            <span style={{ color: '#ef4444' }}>SEM</span> <span className="text-blue-600">o</span>
+                        </h3>
+                        <h3 className="text-xl font-black text-blue-600 leading-tight">Protocolo</h3>
+                    </div>
+                    
+                    {[
+                        'Sensação de estar com a vida travada',
+                        'Mente sobrecarregada e ansiedade constante',
+                        'Dificuldade em lidar com pensamentos e emoções negativas',
+                        'Insegurança e baixa autoestima',
+                        'Diálogo interno que faz você se sentir incapaz ou insuficiente'
+                    ].map((item, i) => (
+                         <div key={i} className="flex items-start gap-2 text-sm font-medium text-slate-700 leading-relaxed">
+                            <span className="flex-shrink-0">💔</span>
+                            <span>{item}</span>
+                        </div>
+                    ))}
+                </div>
+
+                 {/* Right Column (COM) */}
+                 <div 
+                    className="bg-white rounded-2xl p-5 flex flex-col gap-4 shadow-sm"
+                    style={{ border: '1px solid #e5e7eb' }}
+                >
+                    <div className="text-center mb-1">
+                        <h3 className="text-2xl font-black leading-tight">
+                            <span className="text-blue-600">COM</span> <span className="text-blue-600">o</span>
+                        </h3>
+                        <h3 className="text-xl font-black text-blue-600 leading-tight">Protocolo</h3>
+                    </div>
+                    
+                    {[
+                        'Cura dos traumas que te causaram sofrimento',
+                        'Sensação de leveza e paz interior',
+                        'Confiança para enfrentar desafios e atingir objetivos',
+                        'Mente livre do excesso de pensamentos negativos',
+                        'Relações saudáveis e respeitosas'
+                    ].map((item, i) => (
+                         <div key={i} className="flex items-start gap-2 text-sm font-medium text-slate-700 leading-relaxed">
+                            <span className="flex-shrink-0">🌱</span>
+                            <span>{item}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <p className="text-center font-bold text-lg mb-8 leading-tight">
+                <span className="text-blue-600">Cure suas feridas emocionais em 14 dias</span>{' '}
+                <span style={{color: '#f97316'}}>com exercícios diários de 10 minutos</span>
+            </p>
+
+            <img 
+                src="https://i.imgur.com/k5Tskaj.png" 
+                alt="Protocolo" 
+                className="w-full max-w-md mx-auto mb-8"
+            />
+
+            {/* 4. Feature Bullets */}
+            <div className="flex flex-col gap-3 mb-12 px-4">
+                 {[
+                    { bold: 'Protocolo Personalizado', normal: 'de 14 Dias' },
+                    { bold: 'Exercícios Diários', normal: 'de 10 minutos' },
+                    { bold: 'Livro Digital', normal: '"A Ciência do Trauma"', italic: true },
+                    { bold: 'Rotina matinal', normal: 'Anti-Estresse' },
+                    { bold: 'Checklist', normal: 'da Autoestima Blindada' },
+                    { bold: 'Planner', normal: 'de Evolução da Cura' }
+                 ].map((item, i) => (
+                     <p key={i} className="text-sm font-medium text-slate-700 flex items-start gap-2">
+                         <span className="text-green-600 flex-shrink-0">✅</span>
+                         <span>
+                             <span className="font-bold text-green-600">{item.bold}</span>{' '}
+                             <span className={item.italic ? 'italic' : ''}>{item.normal}</span>
+                         </span>
+                     </p>
+                 ))}
+            </div>
+
+
+            {/* 5. Bonuses Section */}
+            <div className="mb-10 px-4 space-y-6">
+                 {/* Bonus 1 */}
+                 <div className="flex items-center gap-4">
+                     <img 
+                         src="https://i.imgur.com/OI7rBol.png" 
+                         alt="Como Parar de Atrair Relacionamentos Tóxicos" 
+                         style={{ width: '100px', minWidth: '100px' }}
+                         className="h-auto drop-shadow-lg"
+                     />
+                     <div className="flex-1 bg-sky-50 p-4 rounded-2xl border border-sky-100 relative">
+                         <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-sky-50"></div>
+                         <div className="flex items-center gap-2 mb-2">
+                             <span className="text-lg">🎁</span>
+                             <span style={{ color: '#16a34a', fontWeight: 'bold' }}>Bônus 1</span>
+                             <span style={{ color: '#ef4444', fontWeight: 'bold', textDecoration: 'line-through' }}>R$27</span>
+                         </div>
+                         <p className="text-sm text-slate-700 leading-relaxed">
+                             Descubra por que você sempre atrai pessoas que te ferem e quebre esse padrão de uma vez por todas.
+                         </p>
+                     </div>
+                 </div>
+
+                 {/* Bonus 2 */}
+                 <div className="flex items-center gap-4">
+                     <img 
+                         src="https://i.imgur.com/fRjPgXo.png" 
+                         alt="Superando a Tristeza, a Mágoa e o Desânimo" 
+                         style={{ width: '100px', minWidth: '100px' }}
+                         className="h-auto drop-shadow-lg"
+                     />
+                     <div className="flex-1 bg-sky-50 p-4 rounded-2xl border border-sky-100 relative">
+                         <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-sky-50"></div>
+                         <div className="flex items-center gap-2 mb-2">
+                             <span className="text-lg">🎁</span>
+                             <span style={{ color: '#16a34a', fontWeight: 'bold' }}>Bônus 2</span>
+                             <span style={{ color: '#ef4444', fontWeight: 'bold', textDecoration: 'line-through' }}>R$17</span>
+                         </div>
+                         <p className="text-sm text-slate-700 leading-relaxed">
+                             Aprenda técnicas de neurociência para ter mais motivação, fazer as pazes com o passado e melhorar a sua autoestima.
+                         </p>
+                     </div>
+                 </div>
+
+                 {/* Bonus 3 */}
+                 <div className="flex items-center gap-4">
+                     <img 
+                         src="https://i.imgur.com/MAhJVb7.png" 
+                         alt="Como Acalmar Sua Mente em 60 Segundos" 
+                         style={{ width: '100px', minWidth: '100px' }}
+                         className="h-auto drop-shadow-lg"
+                     />
+                     <div className="flex-1 bg-sky-50 p-4 rounded-2xl border border-sky-100 relative">
+                         <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-sky-50"></div>
+                         <div className="flex items-center gap-2 mb-2">
+                             <span className="text-lg">🎁</span>
+                             <span style={{ color: '#16a34a', fontWeight: 'bold' }}>Bônus 3</span>
+                             <span style={{ color: '#ef4444', fontWeight: 'bold', textDecoration: 'line-through' }}>R$37</span>
+                         </div>
+                         <p className="text-sm text-slate-700 leading-relaxed">
+                             Este protocolo científico vai acalmar sua mente em 1 minuto quando a ansiedade, o medo ou a insegurança surgirem.
+                         </p>
+                     </div>
+                 </div>
+            </div>
+
+            {/* 6. Price Section */}
+            <div className="text-center mb-6 px-4">
+                <p className="text-slate-500 text-lg mb-1">
+                    De <span style={{ color: '#ef4444', textDecoration: 'line-through', fontWeight: 'bold' }}>R$97</span>
+                </p>
+                <p className="text-xl font-bold text-slate-700">
+                    Por <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.5rem' }}>R$29,90</span> à vista
+                </p>
+            </div>
+
+            {/* 7. CTA Button */}
+            <div className="px-4 mb-4">
+                <button
+                    onClick={handleBuy}
+                    className="btn-orange w-full text-lg py-4 shadow-orange-200 shadow-xl"
+                >
+                    ACESSAR PROTOCOLO
+                </button>
+            </div>
+
+            {/* Benefits below button */}
+            <div className="text-center mb-8 px-4">
+                <p className="text-xs text-slate-600">
+                    <span className="text-green-600">✅</span> Pagamento único{' '}
+                    <span className="text-green-600">✅</span> Acesso imediato{' '}
+                    <span className="text-green-600">✅</span> Sem cobranças extras
+                </p>
+            </div>
+
+            {/* Statistics Cards */}
+            <div className="px-4 mb-8 space-y-4">
+                {/* Stat 1 */}
+                <div 
+                    style={{ backgroundColor: '#fff7ed', border: '1px solid #fed7aa', borderRadius: '16px', padding: '16px' }}
+                >
+                    <p className="text-center font-bold text-slate-700">
+                        <span style={{ color: '#ea580c' }}>86%</span> dos participantes trataram suas feridas emocionais em menos de 14 dias.
+                    </p>
+                </div>
+                
+                {/* Stat 2 */}
+                <div 
+                    style={{ backgroundColor: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: '16px', padding: '16px' }}
+                >
+                    <p className="text-center font-bold text-slate-700">
+                        <span style={{ color: '#0284c7' }}>78%</span> começaram com níveis de sofrimento emocional semelhantes aos seus.
+                    </p>
+                </div>
+                
+                {/* Stat 3 */}
+                <div 
+                    style={{ backgroundColor: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: '16px', padding: '16px' }}
+                >
+                    <p className="text-center font-bold text-slate-700">
+                        <span style={{ color: '#0284c7' }}>41%</span> das pessoas vivenciaram os mesmos traumas de infância que você.
+                    </p>
+                </div>
+            </div>
+
+            {/* Testimonial */}
+            <div className="px-4 mb-8">
+                <div 
+                    style={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '16px', padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
+                >
+                    <div style={{ color: '#facc15', fontSize: '14px', marginBottom: '8px' }}>★★★★★</div>
+                    <p className="font-bold text-slate-700 mb-1">"Eu não conseguia esquecer ele"</p>
+                    <p className="text-xs text-slate-500 mb-3">Ângela Porto, 45 anos</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                        Fui criada em um ambiente de muitas brigas com muitas idas e vindas dos meus pais, na minha fase adulta me percebi sem conseguir esquecer um ex-relacionamento tóxico mesmo já namorando outra pessoa há mais de 2 anos. O protocolo me ajudou a finalmente ressignificar o que aconteceu e hoje o sentimento é de indiferença.
+                    </p>
+                </div>
+            </div>
+
+
+            {/* 10. Guarantee Section */}
+            <div className="text-center mb-12 px-4">
+                <h2 className="text-xl font-black text-slate-800 mb-6">
+                    Teste com garantia de <span style={{ color: '#f97316' }}>7 dias</span>
+                </h2>
+                
+                {/* Guarantee Badge */}
+                <div className="mb-6">
+                    <img 
+                        src="https://jardimconsciente.com.br/wp-content/uploads/2024/04/GARANTIA-7-DIAS-B.png" 
+                        alt="Garantia de 7 dias" 
+                        className="mx-auto"
+                        style={{ width: '140px', height: 'auto' }}
+                    />
+                </div>
+
+                {/* Text */}
+                <div className="space-y-4 text-sm text-slate-700 leading-relaxed">
+                    <p>
+                        Acreditamos tanto no poder deste protocolo que oferecemos a você uma <strong>garantia incondicional de 7 dias</strong>.
+                    </p>
+                    <p>
+                        Se por qualquer motivo você sentir que o material não cumpriu com as suas expectativas, <strong>devolvemos 100% do seu investimento</strong>.
+                    </p>
+                    <p>
+                        Você solicita o reembolso com <span style={{ color: '#f97316', fontWeight: 'bold' }}>1 único clique</span> na própria plataforma de aulas e recebe seu dinheiro de volta em sua conta em <strong>menos de 24 horas</strong>.
+                    </p>
+                    <p>
+                        Sem perguntas, sem explicações, sem burocracia.
+                    </p>
+                </div>
+            </div>
+
+            {/* Two Options Section */}
+            <div className="px-4 mb-12">
+                {/* Title */}
+                <h2 className="text-xl font-bold text-slate-800 text-center mb-6">
+                    <span style={{ color: '#f59e0b' }}>⚠️</span> Você tem{' '}
+                    <span style={{ color: '#2563eb', textDecoration: 'underline', fontWeight: 'bold' }}>duas opções</span>{' '}
+                    agora...
+                </h2>
+
+                <div className="space-y-4">
+                    {/* Option 1 - Negative */}
+                    <p className="text-sm text-slate-700 leading-relaxed text-center">
+                        <span style={{ color: '#ef4444', fontWeight: 'bold' }}>❌ Sair dessa página,</span> continuar vivendo os mesmos padrões de autossabotagem e seguir sendo refém das memórias que ainda te machucam ao lembrar.
+                    </p>
+
+                    {/* Option 2 - Positive */}
+                    <p className="text-sm text-slate-700 leading-relaxed text-center">
+                        <span style={{ color: '#22c55e', fontWeight: 'bold' }}>✅ Acessar o protocolo,</span> ressignificar as suas feridas emocionais e sentir o prazer de viver sem o peso dos seus traumas.
+                    </p>
+
+                    {/* Fire option */}
+                    <p className="text-sm text-slate-700 leading-relaxed text-center">
+                        <span style={{ color: '#f97316' }}>🔥</span>{' '}
+                        <span style={{ color: '#f97316', fontWeight: 'bold' }}>Você não tem nada a perder!</span> Garanta sua vaga agora, teste por 7 dias e veja com seus próprios olhos como é possível curar a sua criança feridas em 1 semana.
+                    </p>
+                </div>
+
+                {/* CTA Price */}
+                <h2 className="text-xl font-bold text-blue-600 text-center mt-8 leading-relaxed">
+                    Comece agora investindo apenas{' '}
+                    <span style={{ color: '#22c55e', textDecoration: 'underline', fontWeight: 'bold' }}>R$0,99</span>{' '}
+                    por dia de protocolo!
+                </h2>
+            </div>
+
+            {/* Final Offer Card */}
+            <div className="px-4 mb-6">
+                <div 
+                    style={{ 
+                        backgroundColor: '#f0f9ff', 
+                        border: '1px solid #bae6fd', 
+                        borderRadius: '16px', 
+                        padding: '20px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <div>
+                        <p className="font-bold text-slate-800 text-lg">
+                            Protocolo de <span style={{ color: '#2563eb' }}>14 Dias</span>
+                        </p>
+                        <p className="font-bold text-slate-800 text-lg">
+                            + 3 Bônus <span style={{ color: '#2563eb' }}>Inclusos</span>
+                        </p>
+                    </div>
+                    <div className="text-right">
+                        <p style={{ color: '#22c55e', fontSize: '12px', fontWeight: 'bold' }}>82%OFF</p>
+                        <p className="text-slate-700">
+                            <span style={{ fontSize: '14px' }}>R$ </span>
+                            <span style={{ color: '#2563eb', fontSize: '32px', fontWeight: '900' }}>29,90</span>
+                        </p>
+                        <p style={{ fontSize: '12px', color: '#64748b' }}>à vista</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Final CTA Button */}
+            <div className="px-4 mb-6">
+                <button
+                    onClick={handleBuy}
+                    className="btn-orange w-full text-lg py-4 shadow-orange-200 shadow-xl"
+                >
+                    ACESSAR PROTOCOLO
+                </button>
+            </div>
+
+            {/* Final Testimonial */}
+            <div className="px-4 mb-12">
+                <div 
+                    style={{ 
+                        backgroundColor: '#ffffff', 
+                        border: '1px solid #e5e7eb', 
+                        borderRadius: '16px', 
+                        padding: '20px',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                    }}
+                >
+                    <div style={{ color: '#facc15', fontSize: '14px', marginBottom: '8px' }}>★★★★★</div>
+                    <p className="font-bold text-slate-700 mb-1">"Eu explodia sempre que era contrariada"</p>
+                    <p className="text-xs text-slate-500 mb-3">Deise Serrano, 62 anos</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                        Tenho dificuldade em lidar com a raiva quando interajo com meus filhos e também alunos da escola que dou aula. O protocolo me ensinou técnicas para eu lidar melhor com o meu estresse e hoje sou capaz de reagir de forma mais equilibrada.
+                    </p>
+                </div>
+            </div>
+
+        </motion.div>
+    );
+};
+
+const _SalesStep_Old = ({ step }) => {
     const handleBuy = () => {
         // Redirect to checkout or payment page
         window.open('https://pay.hotmart.com/F103782328T?off=tu28utsc', '_blank');

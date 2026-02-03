@@ -5,16 +5,41 @@ export const steps = [
     topBar: true,
     title: 'PARA QUEM BUSCA CURAR SEUS TRAUMAS DE INFÂNCIA',
     subtitle: 'Responda este <span class="highlight-orange">quiz de 2 minutos</span> para acessar um <span class="highlight-blue">diagnóstico completo</span> das suas feridas emocionais.',
-
+    offer: '<span class="highlight-orange font-bold">E MAIS!</span> Você vai receber um <span class="highlight-blue font-bold">protocolo terapêutico personalizado de 14 dias</span> para se libertar da dependência emocional, relacionamentos tóxicos e autossabotagem.',
+    heroImage: 'https://i.imgur.com/whDpSVT.png', 
     question: 'Selecione o seu gênero para <span class="highlight-blue">começar</span>:',
-    heroImage: null,
     options: [
       { label: 'Homem ♂️', value: 'male' },
       { label: 'Mulher ♀️', value: 'female' }
     ],
-
+    testimonials: [
+        {
+          stars: 5,
+          title: '“Cresci acreditando que não merecia amor”',
+          name: 'Vanessa Ribeiro',
+          age: 45,
+          text: 'Na minha infância, só ouvia críticas. Meu pai dizia que eu era um erro, e minha mãe raramente demonstrava carinho. Cresci com a sensação de que eu não merecia amor, e isso me acompanhou em todos os meus relacionamentos. Eu aceitava migalhas, achava que qualquer pessoa poderia me tratar mal. Com o diagnóstico da minha criança interior, consegui revisitar essas memórias e ressignificá-las. Hoje sei que não sou definida pelo que vivi na infância. Eu mereço amor e finalmente aprendi a me dar esse amor primeiro.'
+        },
+        {
+          stars: 5,
+          title: '“Eu sempre imaginava que algo ruim ia acontecer”',
+          name: 'André Luiz Pereira',
+          age: 56,
+          text: 'Eu cresci em uma casa onde ninguém falava sobre sentimentos. Mas os gritos e as portas batendo diziam tudo. Cada vez que meu pai perdia o controle, eu me escondia debaixo da cama, rezando para não ser o próximo. Carreguei esse medo por toda a vida adulta, sempre esperando que algo ruim fosse acontecer. O meu protocolo personalizado me ajudou a revisitar minha criança ferida, a dar voz a ele e mostrar que hoje ele já está seguro. Foi a primeira vez que senti paz dentro de mim.'
+        },
+        {
+          stars: 5,
+          title: '“Eu achava que a vida era só sofrimento”',
+          name: 'Camila Mendes',
+          age: 32,
+          text: 'Meu pai era alcoólatra e eu cresci vendo minha mãe apanhar quando ele bebia. Muitas vezes, eu também era o alvo. Passei a adolescência acreditando que a vida era apenas sofrimento e que violência era algo normal. Isso fez de mim uma mulher fria, insegura e sempre em alerta. O protocolo me deu coragem para encarar essa dor enterrada, que eu evitava a qualquer custo. Hoje não vivo mais preso ao medo do passado. Estou aprendendo a construir uma vida sem repetir o ciclo de dor que herdei.'
+        }
+    ]
   },
-
+  {
+    id: 'transition_gender',
+    type: 'transition'
+  },
   {
     id: 'q1',
     type: 'question',
@@ -45,9 +70,9 @@ export const steps = [
     id: 'transition_inner_child_intro',
     type: 'transition',
     condition: (answers) => answers['q2'] === 'nao',
-    title: 'Sem problemas!',
-    image: '/assets/transition_healing.png',
-    copy: 'A "criança interior" é a parte de você que carrega as memórias e emoções da infância. Curá-la é o <span class="font-black text-slate-900">segredo para uma vida adulta mais leve</span>.',
+    title: '<span class="text-blue-600">Sem problemas</span><span class="text-orange-500">!</span>',
+    image: 'https://i.imgur.com/HhjPTSZ.png',
+    copy: 'A Cura da Criança Interior foi estruturada para você que sofreu algum tipo de <span class="font-black text-slate-900">trauma emocional no passado</span>.<br><br>Este método terapêutico é baseado nos ensinamentos do criador da psicanálise Sigmund Freud e o psiquiatra Carl Gustav Jung para ajudar você a <span class="font-black text-slate-900">curar os medos e bloqueios que sabotam a sua vida no presente, sem precisar de anos de terapia.</span>',
     buttonText: 'CONTINUAR'
   },
 
