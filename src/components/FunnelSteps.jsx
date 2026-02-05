@@ -1212,7 +1212,7 @@ export const LeadCaptureStep = ({ step, onNext }) => {
 
 export const SalesStep = ({ step, onNext }) => {
     const handleBuy = () => {
-        window.location.href = 'https://www.ggcheckout.com/checkout/v5/TITdm6Z7y3T8Et64IGoc';
+        window.location.href = 'https://www.ggcheckout.com/checkout/v2/TITdm6Z7y3T8Et64IGoc';
     };
 
     return (
