@@ -12,7 +12,8 @@ import {
   SalesStep,
   CarouselStep
 } from './components/FunnelSteps';
-import Dashboard from './components/Dashboard';
+// Lazy load Dashboard since it's an admin-only feature
+const Dashboard = React.lazy(() => import('./components/Dashboard'));
 
 import { ChevronLeft } from 'lucide-react'; // Add import
 
@@ -183,7 +184,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<QuizFlow />} />
-        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin" element={
+          <React.Suspense fallback={<div className="flex items-center justify-center min-h-screen">Carregando...</div>}>
+            <Dashboard />
+          </React.Suspense>
+        } />
       </Routes>
     </BrowserRouter>
   );

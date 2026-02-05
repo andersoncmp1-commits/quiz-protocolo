@@ -46,6 +46,8 @@ export const LandingStep = ({ step, onNext }) => {
                             src={step.heroImage} 
                             alt="Trauma Faces" 
                             className="w-full h-auto object-cover"
+                            fetchpriority="high"
+                            decoding="async"
                         />
                     </div>
                 )}
@@ -109,6 +111,8 @@ export const TransitionStep = ({ step, onNext }) => {
                         alt="Pessoas curadas"
                         className="w-full h-auto object-cover"
                         style={{ maxHeight: '250px', width: '100%' }}
+                        fetchpriority="high"
+                        decoding="async"
                     />
                 </div>
 
@@ -151,6 +155,8 @@ export const TransitionStep = ({ step, onNext }) => {
                         src={step.image}
                         alt="Transition visual"
                         className="w-full h-auto object-cover"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
             ) : (
@@ -220,6 +226,8 @@ export const InfoStep = ({ step, onNext }) => {
                             src={step.image} 
                             alt="Journey" 
                             className="w-full h-auto block"
+                            loading="lazy"
+                            decoding="async"
                         />
                     </div>
                 )}
@@ -358,6 +366,8 @@ export const InfoStep = ({ step, onNext }) => {
                                     className="w-full h-auto block" 
                                     draggable="false"
                                     style={{ userSelect: 'none', pointerEvents: 'none' }}
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                              </motion.div>
                         </div>
@@ -441,6 +451,8 @@ export const InfoStep = ({ step, onNext }) => {
                             src={step.image} 
                             alt="Illustration" 
                             className="w-full h-auto block"
+                            loading="lazy"
+                            decoding="async"
                         />
                     </div>
                 )}
@@ -1238,6 +1250,8 @@ export const SalesStep = ({ step, onNext }) => {
                         src="https://i.imgur.com/mCK7L5S.png" 
                         alt="Gráfico de evolução emocional" 
                         className="w-full h-auto"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
             </div>
@@ -1306,6 +1320,8 @@ export const SalesStep = ({ step, onNext }) => {
                 src="https://i.imgur.com/k5Tskaj.png" 
                 alt="Protocolo" 
                 className="w-full max-w-md mx-auto mb-8"
+                loading="lazy"
+                decoding="async"
             />
 
             {/* 4. Feature Bullets */}
@@ -1338,6 +1354,8 @@ export const SalesStep = ({ step, onNext }) => {
                          alt="Como Parar de Atrair Relacionamentos Tóxicos" 
                          style={{ width: '100px', minWidth: '100px' }}
                          className="h-auto drop-shadow-lg"
+                         loading="lazy"
+                         decoding="async"
                      />
                      <div className="flex-1 bg-sky-50 p-4 rounded-2xl border border-sky-100 relative">
                          <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-sky-50"></div>
@@ -1359,6 +1377,8 @@ export const SalesStep = ({ step, onNext }) => {
                          alt="Superando a Tristeza, a Mágoa e o Desânimo" 
                          style={{ width: '100px', minWidth: '100px' }}
                          className="h-auto drop-shadow-lg"
+                         loading="lazy"
+                         decoding="async"
                      />
                      <div className="flex-1 bg-sky-50 p-4 rounded-2xl border border-sky-100 relative">
                          <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-sky-50"></div>
@@ -1380,6 +1400,8 @@ export const SalesStep = ({ step, onNext }) => {
                          alt="Como Acalmar Sua Mente em 60 Segundos" 
                          style={{ width: '100px', minWidth: '100px' }}
                          className="h-auto drop-shadow-lg"
+                         loading="lazy"
+                         decoding="async"
                      />
                      <div className="flex-1 bg-sky-50 p-4 rounded-2xl border border-sky-100 relative">
                          <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-sky-50"></div>
@@ -1482,6 +1504,8 @@ export const SalesStep = ({ step, onNext }) => {
                         alt="Garantia de 7 dias" 
                         className="mx-auto"
                         style={{ width: '140px', height: 'auto' }}
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
 
