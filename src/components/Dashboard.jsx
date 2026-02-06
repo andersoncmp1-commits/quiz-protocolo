@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { AnalyticsService } from '../services/analytics';
 import { steps } from '../data/quiz';
-import { ArrowLeft, Trash2, RefreshCcw, GripVertical, Calendar, X } from 'lucide-react';
+import { ArrowLeft, Trash2, RefreshCcw, GripVertical, Calendar, X, Eye, User, TrendingUp, ClipboardCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Reorder, useDragControls } from "framer-motion";
 
@@ -152,19 +152,20 @@ const Dashboard = () => {
         }
     };
 
-    const handleReset = () => {
-        if (window.confirm('Tem certeza que deseja apagar TODOS os dados do quiz?\n\nIsso irá limpar:\n- Dados de analytics/acessos\n- Ordem personalizada do quiz\n- Respostas salvas')) {
-            // Clear all quiz-related data
-            AnalyticsService.reset();
-            localStorage.removeItem('quiz_order');
+    const handleReset = async () => {
+        if (window.confirm('Tem certeza que deseja zerar os dados de ACESSO/VISITAS?\n\nIsso irá apagar todo o histórico de visitas no servidor.\nA ordem das perguntas e configurações NÃO serão alteradas.')) {
+            // Clear analytics data only
+            await AnalyticsService.reset();
+            
+            // Clear local session progress (so you can test again from start), but KEEP settings
             localStorage.removeItem('quizAnswers');
             localStorage.removeItem('currentStep');
+            // localStorage.removeItem('quiz_order'); // Configuração mantida!
             
             // Reload the data
             loadData();
-            setLocalSteps([...steps]);
             
-            alert('✅ Todos os dados foram limpos com sucesso!');
+            alert('✅ Dados de acesso foram limpos com sucesso!');
         }
     };
 
@@ -322,24 +323,92 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* Overview Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <Card
-                                title="Total de Visitantes"
-                                value={data[0]?.visitors || 0}
-                                subtitle="Iniciaram o quiz"
-                            />
-                            <Card
-                                title="Taxa de Conclusão"
-                                value={`${data.length > 0 && data[0].visitors > 0 ? ((data[data.length - 1].visitors / data[0].visitors) * 100).toFixed(1) : 0}%`}
-                                subtitle="Chegaram ao final"
-                            />
-                            <Card
-                                title="Maior Drop-off"
-                                value={data.reduce((max, step) => step.dropOff > max.dropOff ? step : max, { dropOff: 0 }).label || '-'}
-                                subtitle="Precisa de otimização"
-                                warning
-                            />
+                        {/* Overview Cards - Clean Design */}
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                            {/* Card 1: Visitantes */}
+                            <div className="glass-card p-5 hover:border-purple-500/30 transition-all duration-300">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                        <Eye size={16} className="text-purple-400" />
+                                    </div>
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Visitantes</h3>
+                                </div>
+                                <p className="text-3xl font-black text-white mb-1">
+                                    {data[0]?.visitors.toLocaleString() || 0}
+                                </p>
+                                <p className="text-xs text-slate-500">
+                                    Acessaram o funil
+                                </p>
+                            </div>
+
+                            {/* Card 2: Iniciaram */}
+                            <div className="glass-card p-5 hover:border-blue-500/30 transition-all duration-300">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                        <User size={16} className="text-blue-400" />
+                                    </div>
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Iniciaram</h3>
+                                </div>
+                                <p className="text-3xl font-black text-white mb-1">
+                                    {data[1]?.visitors.toLocaleString() || 0}
+                                </p>
+                                <p className="text-xs text-slate-500">
+                                    Interagiram com o quiz
+                                </p>
+                            </div>
+
+                            {/* Card 3: Conversão */}
+                            <div className="glass-card p-5 hover:border-green-500/30 transition-all duration-300">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                        <TrendingUp size={16} className="text-green-400" />
+                                    </div>
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Conversão</h3>
+                                </div>
+                                <p className="text-3xl font-black text-white mb-1">
+                                    {data.length > 1 && data[0]?.visitors > 0 
+                                        ? ((data[1].visitors / data[0].visitors) * 100).toFixed(1) 
+                                        : 0}%
+                                </p>
+                                <p className="text-xs text-slate-500">
+                                    Taxa de interação
+                                </p>
+                            </div>
+
+                            {/* Card 4: Leads Qualificados (+50% etapas) */}
+                            <div className="glass-card p-5 hover:border-pink-500/30 transition-all duration-300">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center">
+                                        <User size={16} className="text-pink-400" />
+                                    </div>
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Qualificados</h3>
+                                </div>
+                                <p className="text-3xl font-black text-white mb-1">
+                                    {(() => {
+                                        const midIndex = Math.floor(data.length / 2);
+                                        return data[midIndex]?.visitors.toLocaleString() || 0;
+                                    })()}
+                                </p>
+                                <p className="text-xs text-slate-500">
+                                    +50% de etapas interagidas
+                                </p>
+                            </div>
+
+                            {/* Card 5: Conclusão */}
+                            <div className="glass-card p-5 hover:border-orange-500/30 transition-all duration-300">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                                        <ClipboardCheck size={16} className="text-orange-400" />
+                                    </div>
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Conclusão</h3>
+                                </div>
+                                <p className="text-3xl font-black text-white mb-1">
+                                    {data[data.length - 1]?.visitors.toLocaleString() || 0}
+                                </p>
+                                <p className="text-xs text-slate-500">
+                                    Finalizaram o quiz
+                                </p>
+                            </div>
                         </div>
 
                         {/* Funnel Chart */}

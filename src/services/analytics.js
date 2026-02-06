@@ -62,7 +62,7 @@ export const AnalyticsService = {
         
         try {
             // Send to Supabase Edge Function
-            await fetch(TRACK_ENDPOINT, {
+            const response = await fetch(TRACK_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,14 +76,44 @@ export const AnalyticsService = {
                     ...utmParams
                 }),
             });
+
+            if(!response.ok) throw new Error('Network response was not ok');
+            // console.log(`[Analytics] Tracked ${stepId} successfully`);
         } catch (error) {
-            console.error('Failed to track step:', error);
+            console.error(`[Analytics] Failed to track step ${stepId}:`, error);
         }
     },
 
     // Get funnel stats from Supabase for the Dashboard
     // Options: { date: 'YYYY-MM-DD' } for single day, { startDate: 'YYYY-MM-DD', endDate: 'YYYY-MM-DD' } for range
     getFunnelStats: async (allSteps, options = {}) => {
+        // Descriptive labels for each step
+        const STEP_LABELS = {
+            'landing': '🏠 Página Inicial',
+            'transition_gender': '⏳ Carregando Quiz',
+            'q1': '📅 Pergunta: Idade',
+            'q2': '🧒 Pergunta: Criança Interior',
+            'transition_inner_child': '💡 Transição: Já Conhece',
+            'transition_inner_child_intro': '📖 Transição: Introdução CI',
+            'q3': '👨‍👩‍👧 Pergunta: Pais na Infância',
+            'q4': '🏡 Pergunta: Ambiente de Criação',
+            'q5': '💔 Pergunta: Memórias Negativas',
+            'transition_info_1': '📊 Info: 5 Feridas Emocionais',
+            'q6': '😰 Pergunta: Mente Sobrecarregada',
+            'q7': '🗣️ Pergunta: Voz Interna',
+            'q8': '💞 Pergunta: Relacionamentos',
+            'transition_info_2': '📰 Info: Impacto do Trauma',
+            'q9': '⏰ Pergunta: Procrastinação',
+            'q10': '💸 Pergunta: Vida Financeira',
+            'q11': '🚫 Pergunta: Limites e Dizer Não',
+            'transition_info_3': '🎯 Info: Benefícios do Protocolo',
+            'q12': '🤝 Pergunta: Comprometimento',
+            'q13': '🎯 Pergunta: Área para Melhorar',
+            'q14': '✨ Pergunta: Outros Temas',
+            'analysis': '⚙️ Análise das Respostas',
+            'sales': '🛒 Página de Vendas'
+        };
+        
         try {
             let url = `${STATS_ENDPOINT}?quiz_name=${QUIZ_NAME}`;
             
@@ -104,7 +134,7 @@ export const AnalyticsService = {
             const stats = allSteps.map(step => ({
                 id: step.id,
                 name: step.id,
-                label: step.type === 'question' ? `Q: ${step.question.substring(0, 15)}...` : step.id,
+                label: STEP_LABELS[step.id] || step.id,
                 visitors: stepCounts[step.id] || 0
             }));
 
@@ -132,7 +162,7 @@ export const AnalyticsService = {
                 funnelStats: allSteps.map(step => ({
                     id: step.id,
                     name: step.id,
-                    label: step.type === 'question' ? `Q: ${step.question.substring(0, 15)}...` : step.id,
+                    label: STEP_LABELS[step.id] || step.id,
                     visitors: 0,
                     dropOff: 0
                 })),
@@ -142,11 +172,36 @@ export const AnalyticsService = {
         }
     },
 
-    // Reset data (only clears local session, not Supabase data)
-    reset: () => {
+    // Reset data (clears both local session and Supabase data)
+    reset: async () => {
+        // Clear local storage
         sessionStorage.removeItem('quiz_session_id');
         sessionStorage.removeItem('quiz_utm_params');
-        console.log('Local session data cleared. Note: Supabase data is not affected.');
+        
+        try {
+            // Call Supabase function to delete remote data
+            const RESET_ENDPOINT = `${SUPABASE_URL}/functions/v1/reset-quiz-analytics`;
+            
+            const response = await fetch(RESET_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    quiz_name: QUIZ_NAME
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to reset remote data');
+            }
+            
+            console.log('Quiz analytics reset successfully (Local + Remote)');
+            return true;
+        } catch (error) {
+            console.error('Failed to reset analytics:', error);
+            return false;
+        }
     },
 
     // Legacy method for backward compatibility (returns empty data)

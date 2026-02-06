@@ -44,13 +44,14 @@ function QuizFlow() {
 
   const currentStep = quizSteps[currentIndex] || steps[0];
 
-  // Track initial load of the landing page
+  // Track current step changes reliably
   useEffect(() => {
-    // Only track if it's the first render of the landing page
-    if (currentIndex === 0 && quizSteps.length > 0) {
-      AnalyticsService.trackStep(quizSteps[0].id).catch(console.error);
+    if (quizSteps.length > 0 && quizSteps[currentIndex]) {
+      const step = quizSteps[currentIndex];
+      // console.log(`[Analytics] Tracking View: ${step.id}`);
+      AnalyticsService.trackStep(step.id).catch(console.error);
     }
-  }, [quizSteps]);
+  }, [currentIndex, quizSteps]); // Re-run when index changes
 
   const handleNext = (data) => {
     const newAnswers = { ...answers, ...data };
@@ -72,9 +73,7 @@ function QuizFlow() {
       setHistory([...history, currentIndex]); // Save current step to history
       setCurrentIndex(nextIndex);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Track the new step
-      AnalyticsService.trackStep(quizSteps[nextIndex].id).catch(console.error);
+      // Tracking is now handled by the useEffect above
     }
   };
 
