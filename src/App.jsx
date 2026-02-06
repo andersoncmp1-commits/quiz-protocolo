@@ -48,7 +48,7 @@ function QuizFlow() {
   useEffect(() => {
     // Only track if it's the first render of the landing page
     if (currentIndex === 0 && quizSteps.length > 0) {
-      AnalyticsService.trackStep(quizSteps[0].id);
+      AnalyticsService.trackStep(quizSteps[0].id).catch(console.error);
     }
   }, [quizSteps]);
 
@@ -74,7 +74,7 @@ function QuizFlow() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Track the new step
-      AnalyticsService.trackStep(quizSteps[nextIndex].id);
+      AnalyticsService.trackStep(quizSteps[nextIndex].id).catch(console.error);
     }
   };
 

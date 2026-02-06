@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { AnalyticsService } from '../services/analytics';
 import { steps } from '../data/quiz';
-import { ArrowLeft, Trash2, RefreshCcw, GripVertical } from 'lucide-react';
+import { ArrowLeft, Trash2, RefreshCcw, GripVertical, Calendar, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Reorder, useDragControls } from "framer-motion";
 
@@ -43,19 +43,72 @@ const DraggableStepItem = ({ step, index }) => {
     );
 };
 
+// Date filter options
+const DATE_FILTERS = [
+    { label: 'Todos', value: 'all' },
+    { label: 'Hoje', value: 'today' },
+    { label: 'Ontem', value: 'yesterday' },
+    { label: 'Últimos 7 dias', value: 'last7days' },
+    { label: 'Últimos 30 dias', value: 'last30days' },
+    { label: 'Data específica', value: 'custom' },
+];
+
+const getDateFromFilter = (filter) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    switch (filter) {
+        case 'today':
+            return { date: today.toISOString().split('T')[0] };
+        case 'yesterday':
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            return { date: yesterday.toISOString().split('T')[0] };
+        case 'last7days':
+            const last7 = new Date(today);
+            last7.setDate(last7.getDate() - 6);
+            return { 
+                startDate: last7.toISOString().split('T')[0], 
+                endDate: today.toISOString().split('T')[0] 
+            };
+        case 'last30days':
+            const last30 = new Date(today);
+            last30.setDate(last30.getDate() - 29);
+            return { 
+                startDate: last30.toISOString().split('T')[0], 
+                endDate: today.toISOString().split('T')[0] 
+            };
+        default:
+            return {};
+    }
+};
+
 const Dashboard = () => {
     const [data, setData] = useState([]);
+    const [dailyStats, setDailyStats] = useState([]);
     const [activeTab, setActiveTab] = useState('analytics');
     const [localSteps, setLocalSteps] = useState([]);
+    const [dateFilter, setDateFilter] = useState('all');
+    const [customDate, setCustomDate] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     // Load Analytics Data
-    const loadData = () => {
-        // We want analytics to respect the CURRENT order if saved
-        // But for consistency, let's load the order first
+    const loadData = async (filter = dateFilter, custom = customDate) => {
+        setIsLoading(true);
         const currentOrder = getOrderedSteps();
-        const stats = AnalyticsService.getFunnelStats(currentOrder);
-        setData(stats);
+        
+        let options = {};
+        if (filter === 'custom' && custom) {
+            options = { date: custom };
+        } else if (filter !== 'all') {
+            options = getDateFromFilter(filter);
+        }
+        
+        const result = await AnalyticsService.getFunnelStats(currentOrder, options);
+        setData(result.funnelStats);
+        setDailyStats(result.dailyStats);
+        setIsLoading(false);
     };
 
     // Helper to get ordered steps
@@ -78,9 +131,26 @@ const Dashboard = () => {
         loadData();
         setLocalSteps(getOrderedSteps());
         
-        const interval = setInterval(loadData, 5000);
+        const interval = setInterval(() => loadData(), 30000); // Refresh every 30s
         return () => clearInterval(interval);
     }, []);
+
+    // Handle filter change
+    const handleFilterChange = (newFilter) => {
+        setDateFilter(newFilter);
+        if (newFilter !== 'custom') {
+            setCustomDate('');
+            loadData(newFilter, '');
+        }
+    };
+
+    // Handle custom date change
+    const handleCustomDateChange = (date) => {
+        setCustomDate(date);
+        if (date) {
+            loadData('custom', date);
+        }
+    };
 
     const handleReset = () => {
         if (window.confirm('Tem certeza que deseja apagar TODOS os dados do quiz?\n\nIsso irá limpar:\n- Dados de analytics/acessos\n- Ordem personalizada do quiz\n- Respostas salvas')) {
@@ -115,7 +185,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="min-h-screen p-8 bg-slate-900 text-slate-100">
+        <div className="admin-dashboard">
             <div className="max-w-7xl mx-auto space-y-8">
 
                 {/* Header */}
@@ -178,23 +248,96 @@ const Dashboard = () => {
 
                 {/* Content */}
                 {activeTab === 'analytics' ? (
-                    <div className="space-y-8">
+                    <div className="space-y-6">
+                        {/* Date Filter Bar - Improved Design */}
+                        <div className="glass-card p-2 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-blue-500/5 pointer-events-none" />
+                            
+                            <div className="flex flex-col xl:flex-row items-center justify-between gap-4 p-2 relative z-10">
+                                
+                                {/* Label Section */}
+                                <div className="hidden md:flex items-center gap-3 text-slate-400 pl-2">
+                                    <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center border border-slate-700 shadow-sm">
+                                        <Calendar className="w-4 h-4 text-purple-400" />
+                                    </div>
+                                    <span className="font-semibold text-sm uppercase tracking-wider text-slate-500">Período</span>
+                                </div>
+
+                                {/* Filters Group */}
+                                <div className="flex-1 w-full xl:w-auto flex justify-center">
+                                    <div className="flex flex-wrap justify-center gap-1.5 bg-slate-900/50 p-1.5 rounded-xl border border-slate-800 w-full md:w-auto">
+                                        {DATE_FILTERS.filter(f => f.value !== 'custom').map((filter) => (
+                                            <button
+                                                key={filter.value}
+                                                onClick={() => handleFilterChange(filter.value)}
+                                                className={`
+                                                    px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex-1 md:flex-none whitespace-nowrap
+                                                    ${dateFilter === filter.value
+                                                        ? 'bg-slate-700 text-white shadow-md ring-1 ring-slate-600'
+                                                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                                                    }
+                                                `}
+                                            >
+                                                {filter.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                {/* Custom Date & Actions */}
+                                <div className="flex items-center gap-3 w-full md:w-auto justify-end border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
+                                    <div className={`
+                                        relative group flex items-center transition-all duration-200 rounded-lg border 
+                                        ${dateFilter === 'custom' 
+                                            ? 'bg-purple-500/10 border-purple-500/50 ring-1 ring-purple-500/30' 
+                                            : 'bg-slate-900 border-slate-700 hover:border-slate-600'
+                                        }
+                                    `}>
+                                        <div className="absolute left-3 text-slate-400 pointer-events-none">
+                                            <Calendar size={14} className={dateFilter === 'custom' ? 'text-purple-400' : ''} />
+                                        </div>
+                                        <input
+                                            type="date"
+                                            value={customDate}
+                                            onChange={(e) => handleCustomDateChange(e.target.value)}
+                                            className="bg-transparent text-sm pl-9 pr-3 py-2 text-slate-200 outline-none cursor-pointer min-w-[140px] [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert-[0.8]"
+                                        />
+                                    </div>
+
+                                    {/* Loading State or Refresh */}
+                                    <div className="w-8 flex justify-center">
+                                        {isLoading ? (
+                                            <div className="w-5 h-5 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+                                        ) : (
+                                            <button 
+                                                onClick={() => loadData()} 
+                                                className="p-2 hover:bg-slate-800 rounded-full text-slate-400 hover:text-purple-400 transition-colors"
+                                                title="Atualizar dados"
+                                            >
+                                                <RefreshCcw size={16} />
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Overview Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <Card
-                                title="Total Visitors"
+                                title="Total de Visitantes"
                                 value={data[0]?.visitors || 0}
-                                subtitle="Started the quiz"
+                                subtitle="Iniciaram o quiz"
                             />
                             <Card
-                                title="Completion Rate"
-                                value={`${data.length > 0 ? ((data[data.length - 1].visitors / data[0].visitors) * 100).toFixed(1) : 0}%`}
-                                subtitle="Reached the end"
+                                title="Taxa de Conclusão"
+                                value={`${data.length > 0 && data[0].visitors > 0 ? ((data[data.length - 1].visitors / data[0].visitors) * 100).toFixed(1) : 0}%`}
+                                subtitle="Chegaram ao final"
                             />
                             <Card
-                                title="Biggest Drop-off"
+                                title="Maior Drop-off"
                                 value={data.reduce((max, step) => step.dropOff > max.dropOff ? step : max, { dropOff: 0 }).label || '-'}
-                                subtitle="Needs optimization"
+                                subtitle="Precisa de otimização"
                                 warning
                             />
                         </div>

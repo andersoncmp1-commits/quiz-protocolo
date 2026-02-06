@@ -779,3 +779,301 @@ html, body {
   min-height: 120px;
 }
 
+/* ============================================
+   ADMIN DASHBOARD - DARK THEME
+   ============================================ */
+
+.admin-dashboard {
+  --admin-bg: #0f172a;
+  --admin-bg-secondary: #1e293b;
+  --admin-bg-tertiary: #334155;
+  --admin-surface: rgba(30, 41, 59, 0.8);
+  --admin-surface-hover: rgba(51, 65, 85, 0.8);
+  --admin-border: rgba(71, 85, 105, 0.5);
+  --admin-text: #f1f5f9;
+  --admin-text-muted: #94a3b8;
+  --admin-accent: #8b5cf6;
+  --admin-accent-secondary: #ec4899;
+  --admin-success: #22c55e;
+  --admin-danger: #ef4444;
+  --admin-warning: #eab308;
+}
+
+.admin-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--admin-bg) 0%, #1a1f35 50%, var(--admin-bg-secondary) 100%);
+  color: var(--admin-text);
+  padding: 2rem;
+}
+
+/* Force full dark background on body when admin is active */
+body:has(.admin-dashboard) {
+  background: #0f172a !important;
+}
+
+html:has(.admin-dashboard) {
+  background: #0f172a !important;
+}
+
+/* Fallback for browsers that don't support :has() */
+.admin-dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+/* Override max-width for admin */
+.admin-dashboard #root,
+.admin-dashboard .max-w-7xl {
+  max-width: 1280px;
+  width: 100%;
+}
+
+/* Glass Card - Dark Version */
+.admin-dashboard .glass-card {
+  background: var(--admin-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard .glass-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 
+    0 10px 25px -5px rgba(0, 0, 0, 0.4),
+    0 4px 10px -2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Stats Cards */
+.admin-dashboard .stat-card {
+  background: linear-gradient(135deg, var(--admin-surface) 0%, rgba(30, 41, 59, 0.6) 100%);
+  border: 1px solid var(--admin-border);
+  padding: 1.5rem;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-dashboard .stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--admin-accent), var(--admin-accent-secondary));
+  opacity: 0.8;
+}
+
+.admin-dashboard .stat-card.warning::before {
+  background: linear-gradient(90deg, var(--admin-danger), #f97316);
+}
+
+/* Chart Container */
+.admin-dashboard .chart-container {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+/* Table Styles */
+.admin-dashboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-dashboard thead tr {
+  border-bottom: 2px solid var(--admin-border);
+}
+
+.admin-dashboard th {
+  color: var(--admin-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 1rem;
+  text-align: left;
+}
+
+.admin-dashboard tbody tr {
+  border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+  transition: background 0.2s ease;
+}
+
+.admin-dashboard tbody tr:hover {
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.admin-dashboard td {
+  padding: 1rem;
+  color: var(--admin-text);
+}
+
+/* Status Badges */
+.admin-dashboard .badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.admin-dashboard .badge-success {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.admin-dashboard .badge-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Buttons */
+.admin-dashboard .btn-primary {
+  background: linear-gradient(135deg, var(--admin-accent) 0%, #7c3aed 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+}
+
+.admin-dashboard .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.admin-dashboard .btn-secondary {
+  background: var(--admin-bg-tertiary);
+  color: var(--admin-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  border: 1px solid var(--admin-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-dashboard .btn-secondary:hover {
+  background: var(--admin-surface-hover);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.admin-dashboard .btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-dashboard .btn-danger:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Tabs */
+.admin-dashboard .tabs {
+  background: var(--admin-bg-tertiary);
+  padding: 0.25rem;
+  border-radius: 12px;
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.admin-dashboard .tab {
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 500;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+}
+
+.admin-dashboard .tab:hover {
+  color: var(--admin-text);
+}
+
+.admin-dashboard .tab.active {
+  background: var(--admin-surface);
+  color: var(--admin-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradient Text */
+.admin-dashboard .gradient-text {
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scrollbar */
+.admin-dashboard ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-dashboard ::-webkit-scrollbar-track {
+  background: var(--admin-bg-secondary);
+  border-radius: 4px;
+}
+
+.admin-dashboard ::-webkit-scrollbar-thumb {
+  background: var(--admin-bg-tertiary);
+  border-radius: 4px;
+}
+
+.admin-dashboard ::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+  }
+}
+
+.admin-dashboard .pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+  
+  .admin-dashboard .glass-card {
+    padding: 1rem;
+  }
+}
