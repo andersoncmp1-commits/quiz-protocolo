@@ -67,6 +67,7 @@ export const AnalyticsService = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                keepalive: true,
                 body: JSON.stringify({
                     session_id: sessionId,
                     step_id: stepId,
@@ -153,7 +154,8 @@ export const AnalyticsService = {
             return {
                 funnelStats,
                 dailyStats,
-                totalUniqueVisitors
+                totalUniqueVisitors,
+                stepCounts
             };
         } catch (error) {
             console.error('Failed to get funnel stats:', error);
@@ -167,7 +169,8 @@ export const AnalyticsService = {
                     dropOff: 0
                 })),
                 dailyStats: [],
-                totalUniqueVisitors: 0
+                totalUniqueVisitors: 0,
+                stepCounts: {}
             };
         }
     },

@@ -86,6 +86,7 @@ const getDateFromFilter = (filter) => {
 const Dashboard = () => {
     const [data, setData] = useState([]);
     const [dailyStats, setDailyStats] = useState([]);
+    const [stepCounts, setStepCounts] = useState({});
     const [activeTab, setActiveTab] = useState('analytics');
     const [localSteps, setLocalSteps] = useState([]);
     const [dateFilter, setDateFilter] = useState('all');
@@ -108,6 +109,7 @@ const Dashboard = () => {
         const result = await AnalyticsService.getFunnelStats(currentOrder, options);
         setData(result.funnelStats);
         setDailyStats(result.dailyStats);
+        setStepCounts(result.stepCounts || {});
         setIsLoading(false);
     };
 
@@ -201,6 +203,8 @@ const Dashboard = () => {
                             </h1>
                             <p className="text-xs text-slate-400">Gerencie seu quiz e veja resultados</p>
                         </div>
+
+
                     </div>
                     
                     {/* Tabs */}
@@ -261,8 +265,12 @@ const Dashboard = () => {
                                     <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center border border-slate-700 shadow-sm">
                                         <Calendar className="w-4 h-4 text-purple-400" />
                                     </div>
+
+
                                     <span className="font-semibold text-sm uppercase tracking-wider text-slate-500">Período</span>
                                 </div>
+
+
 
                                 {/* Filters Group */}
                                 <div className="flex-1 w-full xl:w-auto flex justify-center">
@@ -283,7 +291,11 @@ const Dashboard = () => {
                                             </button>
                                         ))}
                                     </div>
+
+
                                 </div>
+
+
                                 
                                 {/* Custom Date & Actions */}
                                 <div className="flex items-center gap-3 w-full md:w-auto justify-end border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
@@ -297,6 +309,8 @@ const Dashboard = () => {
                                         <div className="absolute left-3 text-slate-400 pointer-events-none">
                                             <Calendar size={14} className={dateFilter === 'custom' ? 'text-purple-400' : ''} />
                                         </div>
+
+
                                         <input
                                             type="date"
                                             value={customDate}
@@ -304,6 +318,8 @@ const Dashboard = () => {
                                             className="bg-transparent text-sm pl-9 pr-3 py-2 text-slate-200 outline-none cursor-pointer min-w-[140px] [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert-[0.8]"
                                         />
                                     </div>
+
+
 
                                     {/* Loading State or Refresh */}
                                     <div className="w-8 flex justify-center">
@@ -319,9 +335,17 @@ const Dashboard = () => {
                                             </button>
                                         )}
                                     </div>
+
+
                                 </div>
+
+
                             </div>
+
+
                         </div>
+
+
 
                         {/* Overview Cards - Clean Design */}
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -331,8 +355,12 @@ const Dashboard = () => {
                                     <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
                                         <Eye size={16} className="text-purple-400" />
                                     </div>
+
+
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Visitantes</h3>
                                 </div>
+
+
                                 <p className="text-3xl font-black text-white mb-1">
                                     {data[0]?.visitors.toLocaleString() || 0}
                                 </p>
@@ -341,14 +369,20 @@ const Dashboard = () => {
                                 </p>
                             </div>
 
+
+
                             {/* Card 2: Iniciaram */}
                             <div className="glass-card p-5 hover:border-blue-500/30 transition-all duration-300">
                                 <div className="flex items-center gap-2 mb-3">
                                     <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
                                         <User size={16} className="text-blue-400" />
                                     </div>
+
+
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Iniciaram</h3>
                                 </div>
+
+
                                 <p className="text-3xl font-black text-white mb-1">
                                     {data[1]?.visitors.toLocaleString() || 0}
                                 </p>
@@ -357,14 +391,20 @@ const Dashboard = () => {
                                 </p>
                             </div>
 
+
+
                             {/* Card 3: Conversão */}
                             <div className="glass-card p-5 hover:border-green-500/30 transition-all duration-300">
                                 <div className="flex items-center gap-2 mb-3">
                                     <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
                                         <TrendingUp size={16} className="text-green-400" />
                                     </div>
+
+
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Conversão</h3>
                                 </div>
+
+
                                 <p className="text-3xl font-black text-white mb-1">
                                     {data.length > 1 && data[0]?.visitors > 0 
                                         ? ((data[1].visitors / data[0].visitors) * 100).toFixed(1) 
@@ -375,14 +415,20 @@ const Dashboard = () => {
                                 </p>
                             </div>
 
+
+
                             {/* Card 4: Leads Qualificados (+50% etapas) */}
                             <div className="glass-card p-5 hover:border-pink-500/30 transition-all duration-300">
                                 <div className="flex items-center gap-2 mb-3">
                                     <div className="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center">
                                         <User size={16} className="text-pink-400" />
                                     </div>
+
+
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Qualificados</h3>
                                 </div>
+
+
                                 <p className="text-3xl font-black text-white mb-1">
                                     {(() => {
                                         const midIndex = Math.floor(data.length / 2);
@@ -394,20 +440,88 @@ const Dashboard = () => {
                                 </p>
                             </div>
 
+
+
                             {/* Card 5: Conclusão */}
                             <div className="glass-card p-5 hover:border-orange-500/30 transition-all duration-300">
                                 <div className="flex items-center gap-2 mb-3">
                                     <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
                                         <ClipboardCheck size={16} className="text-orange-400" />
                                     </div>
+
+
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Conclusão</h3>
                                 </div>
+
+
                                 <p className="text-3xl font-black text-white mb-1">
                                     {data[data.length - 1]?.visitors.toLocaleString() || 0}
                                 </p>
                                 <p className="text-xs text-slate-500">
                                     Finalizaram o quiz
                                 </p>
+                            </div>
+
+
+                        </div>
+
+                        {/* Checkout Interactions */}
+                        <div className="glass-card p-6 border-orange-500/20">
+                            <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-slate-200">
+                                <span className="text-orange-500 text-2xl">🛒</span> Checkout Interactions
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                                    <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Clicks</h3>
+                                    <div className="flex items-end gap-2">
+                                        <p className="text-3xl font-black text-white">
+                                            {(stepCounts['checkout_click_any'] || 0).toLocaleString()}
+                                        </p>
+                                        <p className="text-xs text-slate-500 mb-1">
+                                            cliques acumulados
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                                    <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Price Section</h3>
+                                    <div className="flex items-end gap-2">
+                                        <p className="text-3xl font-black text-orange-400">
+                                            {(stepCounts['checkout_click_price_section'] || 0).toLocaleString()}
+                                        </p>
+                                        <p className="text-xs text-slate-500 mb-1">
+                                            botão do preço
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                                    <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Final CTA</h3>
+                                     <div className="flex items-end gap-2">
+                                        <p className="text-3xl font-black text-blue-400">
+                                            {(stepCounts['checkout_click_final_cta'] || 0).toLocaleString()}
+                                        </p>
+                                        <p className="text-xs text-slate-500 mb-1">
+                                            botão final
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                                    <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Checkout CTR</h3>
+                                     <div className="flex items-end gap-2">
+                                        <p className="text-3xl font-black text-green-400">
+                                            {(() => {
+                                                const salesVisits = data[data.length - 1]?.visitors || 0;
+                                                const clicks = stepCounts['checkout_click_any'] || 0;
+                                                return salesVisits > 0 ? ((clicks / salesVisits) * 100).toFixed(1) : 0;
+                                            })()}%
+                                        </p>
+                                        <p className="text-xs text-slate-500 mb-1">
+                                            taxa de clique
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -442,6 +556,8 @@ const Dashboard = () => {
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
+
+
 
                         {/* Detailed Table */}
                         <div className="glass-card overflow-hidden">
@@ -478,6 +594,8 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                         </div>
+
+
                     </div>
                 ) : (
                     <div className="max-w-3xl mx-auto">
@@ -486,6 +604,8 @@ const Dashboard = () => {
                                 ℹ️ Arraste os itens abaixo para reordenar a sequência do quiz. Não esqueça de salvar no botão acima.
                             </p>
                         </div>
+
+
                         
                         <Reorder.Group axis="y" values={localSteps} onReorder={setLocalSteps} className="space-y-3 pb-12">
                             {localSteps.map((step, index) => (

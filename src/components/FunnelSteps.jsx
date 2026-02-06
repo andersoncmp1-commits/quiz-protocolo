@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, Shield, Play, Lock, ChevronRight, CloudRain, Sprout, Brain, TriangleAlert, Ghost, UserX, ThumbsDown, ShieldAlert, Scale, X } from 'lucide-react';
+import { AnalyticsService } from '../services/analytics';
 import crowdImage from '../assets/crowd_silhouettes.png';
 
 const variants = {
@@ -1223,7 +1224,16 @@ export const LeadCaptureStep = ({ step, onNext }) => {
 };
 
 export const SalesStep = ({ step, onNext }) => {
-    const handleBuy = () => {
+    const handleBuy = (btnName) => {
+        // Track the specific button click
+        // Default to 'unknown' if not provided
+        const buttonId = btnName || 'unknown';
+        
+        // Track specific button
+        AnalyticsService.trackStep(`checkout_click_${buttonId}`);
+        // Track generic event for simpler counting if needed
+        AnalyticsService.trackStep('checkout_click_any');
+
         window.location.href = 'https://www.ggcheckout.com/checkout/v2/TITdm6Z7y3T8Et64IGoc';
     };
 
@@ -1430,7 +1440,7 @@ export const SalesStep = ({ step, onNext }) => {
             {/* 7. CTA Button */}
             <div className="px-4 mb-4">
                 <button
-                    onClick={handleBuy}
+                    onClick={() => handleBuy('price_section')}
                     className="btn-orange w-full text-lg py-4 shadow-orange-200 shadow-xl"
                 >
                     ACESSAR PROTOCOLO
@@ -1596,7 +1606,7 @@ export const SalesStep = ({ step, onNext }) => {
             {/* Final CTA Button */}
             <div className="px-4 mb-6">
                 <button
-                    onClick={handleBuy}
+                    onClick={() => handleBuy('final_cta')}
                     className="btn-orange w-full text-lg py-4 shadow-orange-200 shadow-xl"
                 >
                     ACESSAR PROTOCOLO
