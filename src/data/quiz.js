@@ -6,7 +6,7 @@ export const steps = [
     title: 'PARA QUEM BUSCA CURAR SEUS TRAUMAS DE INFÂNCIA',
     subtitle: 'Responda este <span class="highlight-orange">quiz de 2 minutos</span> para acessar um <span class="highlight-blue">diagnóstico completo</span> das suas feridas emocionais.',
     offer: '<span class="highlight-orange font-bold">E MAIS!</span> Você vai receber um <span class="highlight-blue font-bold">protocolo terapêutico personalizado de 14 dias</span> para se libertar da dependência emocional, relacionamentos tóxicos e autossabotagem.',
-    heroImage: 'https://i.imgur.com/whDpSVT.png', 
+
     question: 'Selecione o seu gênero para <span class="highlight-blue">começar</span>:',
     options: [
       { label: 'Homem ♂️', value: 'male' },

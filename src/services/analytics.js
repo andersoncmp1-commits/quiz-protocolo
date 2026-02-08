@@ -207,6 +207,11 @@ export const AnalyticsService = {
         }
     },
 
+    // Get stored UTM parameters
+    getUTMParams: () => {
+        return getStoredUTMParams();
+    },
+
     // Legacy method for backward compatibility (returns empty data)
     getData: () => {
         return { sessions: [], stepCounts: {} };

@@ -57,7 +57,7 @@ export const LandingStep = ({ step, onNext }) => {
                     dangerouslySetInnerHTML={{ __html: step.question }}
                 />
 
-                <div className="grid grid-cols-2 gap-4 w-full mb-8">
+                <div className="grid grid-cols-2 gap-4 w-full" style={{ marginBottom: '48px' }}>
                     {step.options.map((opt) => (
                         <button
                             key={opt.value}
@@ -1226,7 +1226,6 @@ export const LeadCaptureStep = ({ step, onNext }) => {
 export const SalesStep = ({ step, onNext }) => {
     const handleBuy = (btnName) => {
         // Track the specific button click
-        // Default to 'unknown' if not provided
         const buttonId = btnName || 'unknown';
         
         // Track specific button
@@ -1234,7 +1233,15 @@ export const SalesStep = ({ step, onNext }) => {
         // Track generic event for simpler counting if needed
         AnalyticsService.trackStep('checkout_click_any');
 
-        window.location.href = 'https://www.ggcheckout.com/checkout/v2/TITdm6Z7y3T8Et64IGoc';
+        // Append UTM parameters to checkout URL
+        const utmParams = AnalyticsService.getUTMParams();
+        const checkoutUrl = new URL('https://www.ggcheckout.com/checkout/v2/TITdm6Z7y3T8Et64IGoc');
+        
+        Object.entries(utmParams).forEach(([key, value]) => {
+            if (value) checkoutUrl.searchParams.append(key, value);
+        });
+
+        window.location.href = checkoutUrl.toString();
     };
 
     return (
@@ -2034,7 +2041,15 @@ export const SalesStep = ({ step, onNext }) => {
 const _SalesStep_Old = ({ step }) => {
     const handleBuy = () => {
         // Redirect to checkout or payment page
-        window.open('https://pay.hotmart.com/F103782328T?off=tu28utsc', '_blank');
+        // Append UTM parameters to checkout URL
+        const utmParams = AnalyticsService.getUTMParams();
+        const checkoutUrl = new URL('https://pay.hotmart.com/F103782328T?off=tu28utsc');
+        
+        Object.entries(utmParams).forEach(([key, value]) => {
+            if (value) checkoutUrl.searchParams.append(key, value);
+        });
+
+        window.open(checkoutUrl.toString(), '_blank');
     };
 
     return (
