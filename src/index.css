@@ -1160,6 +1160,7 @@ html:has(.admin-dashboard) {
   color: #fb923c;
   background: linear-gradient(135deg, #fdba74 0%, #f97316 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
