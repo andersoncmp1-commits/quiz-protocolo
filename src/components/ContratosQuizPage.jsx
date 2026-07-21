@@ -83,6 +83,7 @@ export default function ContratosQuizPage() {
   const advanceTimerRef = useRef(null);
 
   const questions = CONTRATOS_QUIZ_DATA.questions;
+  const introCopy = CONTRATOS_QUIZ_DATA.intro;
   const currentQuestion = questions[currentQuestionIndex];
   const progress = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
   const results = calculateContratosResult(answers);
@@ -227,12 +228,12 @@ export default function ContratosQuizPage() {
                 <div className="hero-content">
                   <span className="contratos-eyebrow"><Eye size={15} /> Avaliação de padrões inconscientes</span>
                   <h1>
-                    E se algumas escolhas <em>não fossem realmente suas?</em>
+                    Descubra qual <em>contrato invisível</em> governa a sua vida
                   </h1>
-                  <p>
-                    Descubra qual <strong>contrato invisível</strong> pode estar guiando seus limites,
-                    relações e decisões — sem que você perceba.
-                  </p>
+                  <div className="hero-intro-copy">
+                    <p>{introCopy[0]}</p>
+                    <p>{introCopy[1]}</p>
+                  </div>
 
                   <button type="button" className="contratos-primary-button" onClick={startQuiz}>
                     <span>Descobrir meu contrato</span>
@@ -261,6 +262,23 @@ export default function ContratosQuizPage() {
                       </div>
                     );
                   })}
+                </div>
+              </div>
+
+              <div className="contratos-context-card">
+                <div className="context-main-copy">
+                  <span className="context-icon"><HeartHandshake size={21} /></span>
+                  <div>
+                    <strong>Como esses acordos agem</strong>
+                    <p>{introCopy[2]}</p>
+                  </div>
+                </div>
+                <div className="context-outcome">
+                  <Sparkles size={20} />
+                  <div>
+                    <strong>O que você vai descobrir</strong>
+                    <p>{introCopy[4]}</p>
+                  </div>
                 </div>
               </div>
 
@@ -294,8 +312,8 @@ export default function ContratosQuizPage() {
               <div className="contratos-answer-note">
                 <span className="note-icon"><Brain size={20} /></span>
                 <div>
-                  <strong>Não existe resposta certa ou errada.</strong>
-                  <p>Responda pensando em como você realmente age — não em como gostaria de agir.</p>
+                  <strong>Como responder</strong>
+                  <p>{introCopy[3]}</p>
                 </div>
                 <Check size={18} className="note-check" />
               </div>

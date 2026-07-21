@@ -23,6 +23,9 @@ body.contratos-page {
   --contratos-plum-deep: #211628;
   --contratos-coral: #e6594b;
   --contratos-coral-dark: #c94337;
+  --contratos-cta-green: #2f7d55;
+  --contratos-cta-green-dark: #236242;
+  --contratos-cta-green-light: #4d9b6d;
   --contratos-apricot: #f7ae7c;
   --contratos-paper: #f9f3eb;
   --contratos-cream: #fffaf4;
@@ -255,16 +258,24 @@ body.contratos-page #root {
   background: url("data:image/svg+xml,%3Csvg width='260' height='12' viewBox='0 0 260 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 9C62 2 155 2 258 7' fill='none' stroke='%23e6594b' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
 
-.hero-content > p {
+.hero-intro-copy {
   max-width: 560px;
   margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.hero-intro-copy p {
+  margin: 0;
   font-size: clamp(1rem, 1.45vw, 1.17rem);
   line-height: 1.72;
   color: #655d69;
 }
 
-.hero-content > p strong {
+.hero-intro-copy p:first-child {
   color: var(--contratos-plum);
+  font-weight: 750;
 }
 
 .contratos-primary-button,
@@ -277,8 +288,8 @@ body.contratos-page #root {
   justify-content: space-between;
   gap: 22px;
   color: white;
-  background: var(--contratos-coral);
-  box-shadow: 0 14px 30px rgba(201, 67, 55, 0.22), inset 0 -2px rgba(129, 30, 24, 0.12);
+  background: linear-gradient(135deg, var(--contratos-cta-green-light), var(--contratos-cta-green));
+  box-shadow: 0 14px 30px rgba(35, 98, 66, 0.25), inset 0 -2px rgba(18, 71, 45, 0.16);
   font-size: 0.96rem;
   font-weight: 850;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
@@ -287,8 +298,8 @@ body.contratos-page #root {
 .contratos-primary-button:hover,
 .contratos-cta-button:hover {
   transform: translateY(-2px);
-  background: var(--contratos-coral-dark);
-  box-shadow: 0 18px 34px rgba(201, 67, 55, 0.28), inset 0 -2px rgba(129, 30, 24, 0.14);
+  background: linear-gradient(135deg, #438c62, var(--contratos-cta-green-dark));
+  box-shadow: 0 18px 34px rgba(35, 98, 66, 0.32), inset 0 -2px rgba(18, 71, 45, 0.18);
 }
 
 .contratos-primary-button:active,
@@ -400,8 +411,83 @@ body.contratos-page #root {
 .orbit-card-4 { bottom: 54px; left: 18px; animation-delay: -2.3s; }
 .orbit-card-5 { top: 112px; left: -8px; animation-delay: -1.2s; }
 
+.contratos-context-card {
+  margin-top: 34px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid rgba(50, 33, 59, 0.11);
+  border-radius: 22px;
+  background: rgba(50, 33, 59, 0.1);
+  box-shadow: 0 16px 50px rgba(50, 33, 59, 0.06);
+}
+
+.context-main-copy,
+.context-outcome {
+  min-height: 128px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 252, 248, 0.96);
+}
+
+.context-main-copy {
+  border-radius: 15px 0 0 15px;
+}
+
+.context-outcome {
+  border-radius: 0 15px 15px 0;
+  color: #fffaf4;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(247, 174, 124, 0.22), transparent 42%),
+    var(--contratos-plum);
+}
+
+.context-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--contratos-coral-dark);
+  background: #fce9df;
+}
+
+.context-outcome > svg {
+  color: var(--contratos-apricot);
+}
+
+.context-main-copy strong,
+.context-outcome strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1rem;
+  color: var(--contratos-ink);
+}
+
+.context-outcome strong {
+  color: #fffaf4;
+}
+
+.context-main-copy p,
+.context-outcome p {
+  margin: 0;
+  color: var(--contratos-muted);
+  font-size: 0.78rem;
+  line-height: 1.58;
+}
+
+.context-outcome p {
+  color: #d9cbdc;
+}
+
 .contratos-discovery-strip {
-  margin-top: 54px;
+  margin-top: 20px;
   border: 1px solid rgba(50, 33, 59, 0.11);
   border-radius: 24px;
   padding: 20px;
@@ -657,7 +743,7 @@ body.contratos-page #root {
 .contratos-options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .contratos-option {
@@ -668,27 +754,28 @@ body.contratos-page #root {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 14px;
-  border: 1.5px solid rgba(50, 33, 59, 0.13);
+  border: 1.5px solid #c8bdca;
+  border-left-width: 4px;
   border-radius: 17px;
-  color: #493f4d;
-  background: #fff;
+  color: #332937;
+  background: linear-gradient(135deg, #ffffff 0%, #fcf9f5 100%);
   text-align: left;
-  box-shadow: 0 4px 12px rgba(50, 33, 59, 0.035);
+  box-shadow: 0 5px 0 rgba(50, 33, 59, 0.07), 0 10px 22px rgba(50, 33, 59, 0.055);
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
 .contratos-option:hover:not(:disabled) {
   transform: translateY(-2px) translateX(2px);
-  border-color: rgba(230, 89, 75, 0.55);
-  box-shadow: 0 10px 22px rgba(50, 33, 59, 0.08);
-  background: #fffaf7;
+  border-color: #7f6c83;
+  box-shadow: 0 7px 0 rgba(50, 33, 59, 0.09), 0 14px 26px rgba(50, 33, 59, 0.09);
+  background: #ffffff;
 }
 
 .contratos-option.is-selected {
-  border-color: var(--contratos-coral);
-  color: var(--contratos-plum);
-  background: #fff3ed;
-  box-shadow: 0 9px 24px rgba(230, 89, 75, 0.14);
+  border-color: var(--contratos-cta-green);
+  color: #1f5138;
+  background: #edf7f0;
+  box-shadow: 0 5px 0 rgba(35, 98, 66, 0.13), 0 12px 26px rgba(35, 98, 66, 0.13);
 }
 
 .contratos-option:disabled { cursor: default; }
@@ -698,10 +785,10 @@ body.contratos-page #root {
   height: 38px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(50, 33, 59, 0.14);
+  border: 1px solid var(--contratos-plum);
   border-radius: 12px;
-  color: var(--contratos-plum);
-  background: var(--contratos-paper);
+  color: white;
+  background: var(--contratos-plum);
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 0.95rem;
   font-weight: 700;
@@ -710,13 +797,13 @@ body.contratos-page #root {
 
 .is-selected .option-letter {
   color: white;
-  border-color: var(--contratos-coral);
-  background: var(--contratos-coral);
+  border-color: var(--contratos-cta-green);
+  background: var(--contratos-cta-green);
 }
 
 .option-label {
   font-size: 0.94rem;
-  font-weight: 650;
+  font-weight: 720;
   line-height: 1.45;
 }
 
@@ -725,10 +812,14 @@ body.contratos-page #root {
   transition: transform 180ms ease, color 180ms ease;
 }
 
-.contratos-option:hover .option-arrow,
+.contratos-option:hover .option-arrow {
+  transform: translateX(3px);
+  color: var(--contratos-plum);
+}
+
 .contratos-option.is-selected .option-arrow {
   transform: translateX(3px);
-  color: var(--contratos-coral);
+  color: var(--contratos-cta-green);
 }
 
 .question-footer-note {
@@ -1299,7 +1390,7 @@ body.contratos-page #root {
   .contratos-intro { padding-top: 42px; }
   .contratos-hero { grid-template-columns: 1fr; gap: 34px; }
   .hero-content { max-width: 680px; text-align: center; margin: 0 auto; }
-  .hero-content > p { margin-left: auto; margin-right: auto; }
+  .hero-intro-copy { margin-left: auto; margin-right: auto; }
   .hero-trust-row { justify-content: center; }
   .hero-visual { min-height: 390px; width: min(480px, 100%); margin: 0 auto; }
   .discovery-grid { grid-template-columns: 1fr; }
@@ -1322,7 +1413,7 @@ body.contratos-page #root {
   .contratos-intro { padding: 36px 0 24px; }
   .contratos-hero { min-height: 0; }
   .hero-content h1 { margin-top: 15px; font-size: clamp(2.6rem, 12vw, 4rem); line-height: 1.01; }
-  .hero-content > p { font-size: 0.95rem; line-height: 1.62; }
+  .hero-intro-copy p { font-size: 0.95rem; line-height: 1.62; }
   .hero-content > .contratos-primary-button { width: 100%; }
   .hero-trust-row { gap: 11px 16px; font-size: 0.69rem; }
   .hero-visual { min-height: 330px; transform: scale(0.9); margin-top: -18px; margin-bottom: -20px; }
@@ -1332,7 +1423,12 @@ body.contratos-page #root {
   .orbit-card { padding: 8px 10px; font-size: 0.65rem; }
   .orbit-card-2 { right: -5px; }
   .orbit-card-5 { left: -5px; }
-  .contratos-discovery-strip { margin-top: 26px; padding: 13px; border-radius: 19px; }
+  .contratos-context-card { grid-template-columns: 1fr; padding: 12px; margin-top: 24px; border-radius: 19px; }
+  .context-main-copy,
+  .context-outcome { min-height: 0; padding: 18px 16px; align-items: start; }
+  .context-main-copy { border-radius: 12px 12px 0 0; }
+  .context-outcome { border-radius: 0 0 12px 12px; }
+  .contratos-discovery-strip { margin-top: 18px; padding: 13px; border-radius: 19px; }
   .discovery-grid article { min-height: 92px; padding: 17px; }
   .contratos-answer-note { grid-template-columns: auto 1fr; align-items: start; }
   .note-check { display: none; }
