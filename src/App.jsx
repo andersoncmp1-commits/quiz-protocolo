@@ -16,6 +16,7 @@ import {
 const Dashboard = React.lazy(() => import('./components/Dashboard'));
 
 import { ChevronLeft } from 'lucide-react'; // Add import
+import ContratosQuizPage from './components/ContratosQuizPage';
 
 function QuizFlow() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -183,6 +184,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<QuizFlow />} />
+        <Route path="/contratos-invisiveis" element={<ContratosQuizPage />} />
+        <Route path="/teste-contratos" element={<ContratosQuizPage />} />
         <Route path="/admin" element={
           <React.Suspense fallback={<div className="flex items-center justify-center min-h-screen">Carregando...</div>}>
             <Dashboard />

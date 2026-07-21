@@ -1083,3 +1083,409 @@ html:has(.admin-dashboard) {
     padding: 1rem;
   }
 }
+
+/* ==========================================
+   CONTRATOS INVISÍVEIS QUIZ CUSTOM STYLES
+   ========================================== */
+.contratos-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  color: #0f172a;
+}
+
+.contratos-badge-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  border: 1px solid #c7d2fe;
+  color: #3730a3;
+  padding: 0.4rem 0.95rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12);
+}
+
+.contratos-hero-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #311b92 100%);
+  border: 1px solid #4338ca;
+  border-radius: 1.35rem;
+  padding: 1.65rem 1.35rem;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.contratos-hero-card::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contratos-hero-card .hero-tag {
+  color: #fb923c;
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  margin-bottom: 0.6rem;
+  display: inline-block;
+  background: rgba(249, 115, 22, 0.12);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.contratos-hero-card h1 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+
+.contratos-hero-card h1 span.accent {
+  color: #fb923c;
+  background: linear-gradient(135deg, #fdba74 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contratos-unified-intro-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  color: #334155;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.contratos-unified-intro-card .lead-text {
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.contratos-unified-intro-card .highlight-bold {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.contratos-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.contratos-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.85rem;
+}
+
+.contratos-feature-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.contratos-feature-content h4 {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.15rem 0;
+}
+
+.contratos-feature-content p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.contratos-instruction-card {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1.5px solid #fdba74;
+  color: #9a3412;
+  padding: 0.95rem 1.15rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.08);
+}
+
+.contratos-trust-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 0.85rem;
+  border-radius: 50px;
+  text-align: center;
+}
+
+.contratos-card-white {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.15rem 1.25rem;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.contratos-info-callout {
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  color: #9a3412;
+  padding: 0.85rem 1.15rem;
+  border-radius: 0.85rem;
+  font-size: 0.825rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.contratos-btn-primary {
+  width: 100%;
+  padding: 1.15rem 1.5rem;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  border-radius: 0.85rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.contratos-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.45);
+}
+
+.contratos-btn-primary:active {
+  transform: translateY(0);
+}
+
+.contratos-btn-green {
+  width: 100%;
+  padding: 1.15rem 1.5rem;
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 900;
+  border-radius: 0.85rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.contratos-btn-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.45);
+}
+
+.contratos-question-card {
+  background: #ffffff;
+  border: 2px solid #3b82f6;
+  border-radius: 1.15rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+}
+
+.contratos-question-card .q-tag {
+  display: inline-block;
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.contratos-question-card h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.4;
+}
+
+.contratos-option-btn {
+  width: 100%;
+  padding: 1rem 1.15rem;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 0.85rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #1e293b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.45;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.contratos-option-btn:hover {
+  border-color: #f97316;
+  background: #fff7ed;
+  transform: translateY(-1px);
+}
+
+.contratos-option-btn.selected {
+  border-color: #ea580c;
+  background: #ffedd5;
+  color: #9a3412;
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.2);
+}
+
+.contratos-option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 0.5rem;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-weight: 800;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.contratos-option-btn.selected .contratos-option-letter {
+  background: #ea580c;
+  border-color: #ea580c;
+  color: #ffffff;
+}
+
+.contratos-result-header-box {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 1px solid #312e81;
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+}
+
+.contratos-result-header-box .score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(249, 115, 22, 0.2);
+  border: 1px solid rgba(249, 115, 22, 0.4);
+  color: #fdba74;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.725rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.6rem;
+}
+
+.contratos-result-header-box h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fde047;
+  line-height: 1.4;
+}
+
+.contratos-contract-result-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.contratos-quote-callout {
+  background: #fff7ed;
+  border-left: 4px solid #f97316;
+  padding: 0.85rem 1rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #9a3412;
+  line-height: 1.45;
+}
+
+.contratos-breakdown-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.15rem;
+  padding: 1.15rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.contratos-cta-container {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 2px solid #f97316;
+  border-radius: 1.35rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
