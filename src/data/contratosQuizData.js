@@ -188,7 +188,7 @@ export const CONTRATOS_QUIZ_DATA = {
 
   cta: {
     buttonText: "QUERO ENTRAR NO DESCONGELAR",
-    redirectUrl: "https://descongelar.jardimconsciente.com.br/versao-b"
+    redirectUrl: "https://descongelar.jardimconsciente.com.br/versao-b?utm_source=teste"
   }
 };
 
